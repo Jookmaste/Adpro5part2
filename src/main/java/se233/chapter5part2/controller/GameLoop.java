@@ -1,3 +1,10 @@
+package se233.chapter5part2.controller;
+
+import javafx.scene.control.skin.TextInputControlSkin;
+import javafx.scene.input.KeyCode;
+import se233.chapter5part2.model.Food;
+import se233.chapter5part2.model.Snake;
+
 public class GameLoop implements Runnable {
     private GameStage gameStage;
     private Snake snake;
@@ -12,7 +19,7 @@ public class GameLoop implements Runnable {
     }
     private void keyProcess() {
         KeyCode curKey = gameStage.getKey();
-        Direction curDirection = snake.getDirection();
+        TextInputControlSkin.Direction curDirection = snake.getDirection();
         if (curKey == KeyCode.UP && curDirection != Direction.DOWN)
             snake.setDirection(Direction.UP);
         else if (curKey == KeyCode.DOWN && curDirection != Direction.UP)
@@ -35,6 +42,7 @@ public class GameLoop implements Runnable {
     private void redraw () {
         gameStage.render(snake, food);
     }
+
     @Override
     public void run () {
         while (running) {

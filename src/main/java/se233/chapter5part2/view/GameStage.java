@@ -1,3 +1,13 @@
+package se233.chapter5part2.view;
+
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.input.KeyCode;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import se233.chapter5part2.model.Food;
+import se233.chapter5part2.model.Snake;
+
 public class GameStage extends Pane {
     public static final int WIDTH = 30;
     public static final int HEIGHT = 30;

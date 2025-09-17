@@ -1,3 +1,7 @@
+package se233.chapter5part2.model;
+
+import javafx.geometry.Point2D;
+
 public enum Direction {
     RIGHT(new Point2D(1, 0)),
     LEFT(new Point2D(-1, 0)),

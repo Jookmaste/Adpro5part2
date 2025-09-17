@@ -1,5 +1,10 @@
 package se233.chapter5part2.model;
 
+import javafx.geometry.Point2D;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class Snake {
     private Direction direction;
     private Point2D head;
