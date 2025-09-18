@@ -1,7 +1,6 @@
 package se233.chapter5part2;
 
 import javafx.geometry.Point2D;
-import javafx.scene.control.skin.TextInputControlSkin;
 import javafx.scene.input.KeyCode;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -41,7 +40,7 @@ public class GameLoopTest {
         ReflectionHelper.setField(gameStage, "key", KeyCode.RIGHT);
         ReflectionHelper.setField(snake, "direction", Direction.DOWN);
         clockTickHelper();
-        TextInputControlSkin.Direction currentDirection = (TextInputControlSkin.Direction) ReflectionHelper.getField(snake, " direction");
+        Direction currentDirection = (Direction) ReflectionHelper.getField(snake, "direction");
         assertEquals(Direction.RIGHT, currentDirection);
     }
 
