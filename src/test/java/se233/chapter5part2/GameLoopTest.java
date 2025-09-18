@@ -5,12 +5,16 @@ import javafx.scene.control.skin.TextInputControlSkin;
 import javafx.scene.input.KeyCode;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import se233.chapter5part2.controller.GameLoop;
+import se233.chapter5part2.model.Direction;
 import se233.chapter5part2.model.Food;
 import se233.chapter5part2.model.Snake;
 import se233.chapter5part2.view.GameStage;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 public class GameLoopTest {
     private GameStage gameStage;
@@ -58,8 +62,7 @@ public class GameLoopTest {
     }
 
     @Test
-    public void redraw_calledThreeTimes_snakeAndFoodShouldRenderThreeTimes() throws
-            Exception {
+    public void redraw_calledThreeTimes_snakeAndFoodShouldRenderThreeTimes() throws Exception {
         GameStage mockGameStage = Mockito.mock(GameStage.class);
         Snake mockSnake = Mockito.mock(Snake.class);
         Food mockFood = Mockito.mock(Food.class);
