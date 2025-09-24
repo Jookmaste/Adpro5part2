@@ -11,6 +11,7 @@ public class Snake {
     private Point2D head;
     private Point2D prev_tail;
     private List<Point2D> body;
+
     public Snake(Point2D position) {
         direction = Direction.DOWN;
         body = new ArrayList<>();
@@ -19,7 +20,10 @@ public class Snake {
     }
 
     public boolean checkDead() {
-        boolean isOutOfBound = head.getX() < 0 || head.getY() < 0 || head.getX() > GameStage.WIDTH || head.getY() > GameStage.HEIGHT;
+        boolean isOutOfBound = head.getX() < 1
+                || head.getX() >= GameStage.WIDTH - 1
+                || head.getY() < 1
+                || head.getY() >= GameStage.HEIGHT - 1;
         boolean isHitBody = body.lastIndexOf(head) > 0;
         return isOutOfBound || isHitBody;
     }

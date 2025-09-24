@@ -30,7 +30,6 @@ public class GameLoop implements Runnable {
             snake.setDirection(Direction.LEFT);
         else if (curKey == KeyCode.RIGHT && curDirection != Direction.LEFT)
             snake.setDirection(Direction.RIGHT);
-        snake.move();
     }
     private void checkCollision() {
         if (snake.collided(food)) {
@@ -47,8 +46,10 @@ public class GameLoop implements Runnable {
 
     @Override
     public void run () {
+
         while (running) {
             keyProcess();
+            snake.move();
             checkCollision();
             redraw();
             try {
@@ -57,5 +58,13 @@ public class GameLoop implements Runnable {
                 e.printStackTrace();
             }
         }
+
+        javafx.application.Platform.runLater(() -> {
+            javafx.scene.control.Alert alert = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.INFORMATION);
+            alert.setTitle("Game Over");
+            alert.setHeaderText(null);
+            alert.setContentText("Game Over!");
+            alert.showAndWait();
+        });
     }
 }
