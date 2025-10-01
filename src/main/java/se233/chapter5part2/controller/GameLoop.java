@@ -5,20 +5,29 @@ import javafx.scene.input.KeyCode;
 import se233.chapter5part2.model.Direction;
 import se233.chapter5part2.model.Food;
 import se233.chapter5part2.model.Snake;
+import se233.chapter5part2.model.SpecialFood;
 import se233.chapter5part2.view.GameStage;
 
+import java.lang.reflect.Field;
+
 public class GameLoop implements Runnable {
+
+    private int score = 0;
+
+    public Food normalFood = new Food();
+    public SpecialFood specialFood = new SpecialFood();
+
     private GameStage gameStage;
     private Snake snake;
-    private Food food;
     private float interval = 1000.0f / 10;
     private boolean running;
-    public GameLoop(GameStage gameStage, Snake snake, Food food) {
+
+    public GameLoop(GameStage gameStage, Snake snake) {
         this.snake = snake;
         this.gameStage = gameStage;
-        this.food = food;
         running = true;
     }
+
     private void keyProcess() {
         KeyCode curKey = gameStage.getKey();
         Direction curDirection = snake.getDirection();
@@ -31,25 +40,39 @@ public class GameLoop implements Runnable {
         else if (curKey == KeyCode.RIGHT && curDirection != Direction.LEFT)
             snake.setDirection(Direction.RIGHT);
     }
-    private void checkCollision() {
-        if (snake.collided(food)) {
+
+    public void checkCollision() {
+
+        if (snake.collided(normalFood)) {
             snake.grow();
-            food.respawn();
+            normalFood.respawn();
+            score += 1;
         }
-        if (snake.checkDead()) {
-            running = false;
+
+        if (snake.collided(specialFood)) {
+            for (int i = 0; i < specialFood.getGrowthValue(); i++) {
+                snake.grow();
+            }
+            specialFood.respawn();
+            score += 5;
         }
     }
-    private void redraw () {
-        gameStage.render(snake, food);
+
+    private void redraw() {
+        gameStage.render(snake, normalFood, specialFood);
     }
 
     @Override
-    public void run () {
-
+    public void run() {
         while (running) {
             keyProcess();
             snake.move();
+
+            if (snake.checkDead()) {
+                running = false; // หยุด loop
+                break;
+            }
+
             checkCollision();
             redraw();
             try {
@@ -64,7 +87,18 @@ public class GameLoop implements Runnable {
             alert.setTitle("Game Over");
             alert.setHeaderText(null);
             alert.setContentText("Game Over!");
+            alert.setContentText("Game Over!\nYour Score: " + score);
             alert.showAndWait();
         });
+    }
+
+    private Object getField(Object object, String fieldName) throws Exception {
+        Field field = object.getClass().getDeclaredField(fieldName);
+        field.setAccessible(true);
+        return field.get(object);
+    }
+
+    public int getScore() {
+        return score;
     }
 }

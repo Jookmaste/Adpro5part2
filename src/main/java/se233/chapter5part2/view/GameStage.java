@@ -22,15 +22,27 @@ public class GameStage extends Pane {
         this.getChildren().add(canvas);
     }
 
-    public void render(Snake snake, Food food) {
+    public void render(Snake snake, Food normalFood, Food specialFood) {
         GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.clearRect(0, 0, WIDTH * TILE_SIZE, HEIGHT * TILE_SIZE);
+
+        // วาดงู (สีน้ำเงิน)
         gc.setFill(Color.BLUE);
         snake.getBody().forEach(p -> {
             gc.fillRect(p.getX() * TILE_SIZE, p.getY() * TILE_SIZE, TILE_SIZE, TILE_SIZE);
         });
+
+        // วาดอาหารปกติ (สีแดง)
         gc.setFill(Color.RED);
-        gc.fillRect(food.getPosition().getX() * TILE_SIZE, food.getPosition().getY() * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+        gc.fillRect(normalFood.getPosition().getX() * TILE_SIZE,
+                normalFood.getPosition().getY() * TILE_SIZE,
+                TILE_SIZE, TILE_SIZE);
+
+        // วาดอาหารพิเศษ (สีเขียว)
+        gc.setFill(Color.GREEN);
+        gc.fillRect(specialFood.getPosition().getX() * TILE_SIZE,
+                specialFood.getPosition().getY() * TILE_SIZE,
+                TILE_SIZE, TILE_SIZE);
     }
 
     public KeyCode getKey() {

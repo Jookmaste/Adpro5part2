@@ -25,8 +25,7 @@ public class GameLoopTest {
     public void setUp() {
         gameStage = new GameStage();
         snake = new Snake(new Point2D(0, 0));
-        food = new Food(new Point2D(0, 1));
-        gameLoop = new GameLoop(gameStage, snake, food);
+        gameLoop = new GameLoop(gameStage, snake);
     }
 
     private void clockTickHelper() throws Exception {
@@ -64,11 +63,16 @@ public class GameLoopTest {
     public void redraw_calledThreeTimes_snakeAndFoodShouldRenderThreeTimes() throws Exception {
         GameStage mockGameStage = Mockito.mock(GameStage.class);
         Snake mockSnake = Mockito.mock(Snake.class);
-        Food mockFood = Mockito.mock(Food.class);
-        GameLoop gameLoop = new GameLoop(mockGameStage, mockSnake, mockFood);
+        GameLoop gameLoop = new GameLoop(mockGameStage, mockSnake);
+
+
         ReflectionHelper.invokeMethod(gameLoop, "redraw", new Class<?>[0]);
         ReflectionHelper.invokeMethod(gameLoop, "redraw", new Class<?>[0]);
         ReflectionHelper.invokeMethod(gameLoop, "redraw", new Class<?>[0]);
-        verify(mockGameStage, times(3)).render(mockSnake, mockFood);
+
+
+        verify(mockGameStage, times(3)).render(Mockito.eq(mockSnake),
+                Mockito.any(Food.class),
+                Mockito.any(Food.class));
     }
 }

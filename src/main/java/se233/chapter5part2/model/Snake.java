@@ -20,12 +20,21 @@ public class Snake {
     }
 
     public boolean checkDead() {
-        boolean isOutOfBound = head.getX() < 1
-                || head.getX() >= GameStage.WIDTH - 1
-                || head.getY() < 1
-                || head.getY() >= GameStage.HEIGHT - 1;
-        boolean isHitBody = body.lastIndexOf(head) > 0;
-        return isOutOfBound || isHitBody;
+        Point2D head = body.get(0);
+
+        // ถ้าหัวออกนอกขอบกระดาน → ตาย
+        if (head.getX() < 0 || head.getX() >= GameStage.WIDTH ||
+                head.getY() < 0 || head.getY() >= GameStage.HEIGHT) {
+            return true;
+        }
+
+        // เช็คชนตัวเอง
+        for (int i = 1; i < body.size(); i++) {
+            if (head.equals(body.get(i))) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void move() {
@@ -34,7 +43,12 @@ public class Snake {
         body.add(0, head);
     }
 
-    public void setDirection (Direction direction){
+    public void setDirection(Direction direction) {
+        // ไม่อนุญาตให้เปลี่ยนทิศทางตรงข้ามกับที่กำลังเคลื่อนไป
+        if (this.direction == Direction.UP && direction == Direction.DOWN) return;
+        if (this.direction == Direction.DOWN && direction == Direction.UP) return;
+        if (this.direction == Direction.LEFT && direction == Direction.RIGHT) return;
+        if (this.direction == Direction.RIGHT && direction == Direction.LEFT) return;
         this.direction = direction;
     }
 

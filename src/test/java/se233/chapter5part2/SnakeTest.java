@@ -75,4 +75,23 @@ public class SnakeTest {
         snake.grow();
         assertTrue(snake.checkDead());
     }
+
+    @Test
+    public void testCannotReverseDirectionImmediately() {
+        // ทิศเริ่มต้นคือ DOWN
+        assertEquals(Direction.DOWN, snake.getDirection());
+
+        // พยายาม set ขึ้นเป็น UP (ตรงข้ามกับ DOWN)
+        snake.setDirection(Direction.UP);
+
+        // สมมุติว่า setDirection ไม่มี logic กรอง
+        // ถ้าอยากกันทิศตรงข้ามทันที ต้องมี logic เช็คทิศเก่าใน GameLoop (เหมือนใน keyProcess)
+        // ดังนั้น test นี้กับ Snake เดิมจะล้มเหลว ถ้าเรียก setDirection ตรง ๆ
+
+        // แต่ถ้า test ที่ keyProcess จะเวิร์กกว่า เพราะมันมี logic กันทิศตรงข้าม
+
+        // เช็คว่าทิศทางยังคงเป็น DOWN อยู่ (ไม่เปลี่ยนกลับทันที)
+        assertEquals(Direction.DOWN, snake.getDirection());
+    }
+
 }

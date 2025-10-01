@@ -14,6 +14,7 @@ public class FoodTest {
     public void setup() {
         food = new Food(new Point2D(0, 0));
     }
+
     @Test
     public void respawn_shouldBeOnNewPosition() {
         food.respawn();
